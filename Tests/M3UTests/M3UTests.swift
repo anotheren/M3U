@@ -16,14 +16,11 @@ final class M3UTests: XCTestCase {
         let request = AF.request(url)
         let dataTask = request.serializingData()
         let data = try await dataTask.value
-        guard let string = String(data: data, encoding: .utf8) else {
-            throw M3UTestError.stringEncoding
-        }
+        let string = String(data: data, encoding: .utf8)!
         print(string)
+        let m3u = M3U(string: string)!
+        for tag in m3u.tags {
+            print(tag)
+        }
     }
-}
-
-enum M3UTestError: Error {
-    
-    case stringEncoding
 }

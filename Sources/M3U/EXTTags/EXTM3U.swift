@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct EXTM3U {
+public struct EXTM3U: Equatable {
     
     public init() { }
 }
@@ -19,14 +19,14 @@ extension EXTM3U: EXTTag {
         "#EXTM3U"
     }
     
-    public init?(content: String) {
-        guard content.hasPrefix(EXTM3U.hint) else {
+    public init?(lines: [String]) {
+        guard lines[0].hasPrefix(EXTM3U.hint) else {
             return nil
         }
         self.init()
     }
     
-    public var content: String {
-        EXTM3U.hint
+    public var lines: [String] {
+        [EXTM3U.hint]
     }
 }

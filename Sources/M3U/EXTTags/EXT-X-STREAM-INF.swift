@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct EXT_X_STREAM_INF {
+public struct EXT_X_STREAM_INF: Equatable {
     
 
 }
@@ -19,14 +19,14 @@ extension EXT_X_STREAM_INF: EXTTag {
         "#EXT-X-STREAM-INF"
     }
     
-    public init?(content: String) {
-        guard content.hasPrefix(EXT_X_STREAM_INF.hint) else {
+    public init?(lines: [String]) {
+        guard lines[0].hasPrefix(EXT_X_STREAM_INF.hint) else {
             return nil
         }
         self.init()
     }
     
-    public var content: String {
-        EXT_X_STREAM_INF.hint
+    public var lines: [String] {
+        [EXT_X_STREAM_INF.hint]
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct EXT_X_INDEPENDENT_SEGMENTS {
+public struct EXT_X_INDEPENDENT_SEGMENTS: Equatable {
     
     public init() { }
 }
@@ -19,14 +19,14 @@ extension EXT_X_INDEPENDENT_SEGMENTS: EXTTag {
         "#EXT-X-INDEPENDENT-SEGMENTS"
     }
     
-    public init?(content: String) {
-        guard content.hasPrefix(EXT_X_INDEPENDENT_SEGMENTS.hint) else {
+    public init?(lines: [String]) {
+        guard lines[0].hasPrefix(EXT_X_INDEPENDENT_SEGMENTS.hint) else {
             return nil
         }
         self.init()
     }
     
-    public var content: String {
-        EXT_X_INDEPENDENT_SEGMENTS.hint
+    public var lines: [String] {
+        [EXT_X_INDEPENDENT_SEGMENTS.hint]
     }
 }

@@ -8,17 +8,10 @@
 
 import Foundation
  
-public protocol EXTTag: CustomStringConvertible {
+public protocol EXTTag {
     
     static var hint: String { get }
     
-    init?(content: String)
-    var content: String { get }
-}
-
-extension EXTTag {
-    
-    public var description: String {
-        content
-    }
+    init?(lines: [String])
+    var lines: [String] { get }
 }

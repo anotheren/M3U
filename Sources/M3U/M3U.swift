@@ -9,7 +9,49 @@
 import Foundation
 
 public struct M3U {
+
+    public var tags: [EXTTag]
     
-    public var version: EXT_X_VERSION
+    public init(tags: [EXTTag]) {
+        self.tags = tags
+    }
+}
+
+extension M3U {
     
+    public init?(data: Data) {
+        guard let string = String(data: data, encoding: .utf8) else {
+            return nil
+        }
+        self.init(string: string)
+    }
+    
+    public init?(string: String) {
+        guard !string.isEmpty else { return nil }
+        var tags = [EXTTag]()
+        let lines = string.split(separator: "\n")
+        for (index, line) in lines.enumerated() {
+            if line.hasPrefix("#") {
+                let hasNextLine = index < lines.count-1
+                if hasNextLine, !lines[index+1].hasPrefix("#") {
+                    // tag with TWO lines
+                    let lines = [String(line), String(lines[index+1])]
+                    if let tag = EXTTagBuilder.parser(lines: lines) {
+                        tags.append(tag)
+                    } else {
+                        tags.append(EXTUnknown(lines: lines))
+                    }
+                } else {
+                    // tag with only ONE line
+                    let lines = [String(line)]
+                    if let tag = EXTTagBuilder.parser(lines: lines) {
+                        tags.append(tag)
+                    } else {
+                        tags.append(EXTUnknown(lines: lines))
+                    }
+                }
+            }
+        }
+        self.init(tags: tags)
+    }
 }

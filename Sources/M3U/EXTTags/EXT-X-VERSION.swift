@@ -13,7 +13,7 @@ import Foundation
 /// About the EXT-X-VERSION tag
 /// https://developer.apple.com/documentation/http_live_streaming/about_the_ext-x-version_tag
 ///
-public struct EXT_X_VERSION {
+public struct EXT_X_VERSION: Equatable {
     
     public var version: Int
     
@@ -28,18 +28,18 @@ extension EXT_X_VERSION: EXTTag {
         "#EXT-X-VERSION"
     }
     
-    public init?(content: String) {
-        guard content.hasPrefix(EXT_X_VERSION.hint) else {
+    public init?(lines: [String]) {
+        guard lines[0].hasPrefix(EXT_X_VERSION.hint) else {
             return nil
         }
-        let versionText = content.replacingOccurrences(of: "\(EXT_X_VERSION.hint):", with: "")
+        let versionText = lines[0].replacingOccurrences(of: "\(EXT_X_VERSION.hint):", with: "")
         guard let version = Int(versionText) else {
             return nil
         }
         self.init(version: version)
     }
     
-    public var content: String {
-        "\(EXT_X_VERSION.hint):\(version)"
+    public var lines: [String] {
+        ["\(EXT_X_VERSION.hint):\(version)"]
     }
 }
