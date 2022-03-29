@@ -29,11 +29,14 @@ extension EXT_X_VERSION: EXTTag {
     }
     
     public init?(lines: [String]) {
-        guard lines[0].hasPrefix(Self.hint) else {
+        let line = lines[0]
+        guard line.hasPrefix(Self.hint) else {
             return nil
         }
-        let versionText = lines[0].replacingOccurrences(of: "\(Self.hint):", with: "")
-        guard let version = Int(versionText) else {
+        let startIndex = line.index(line.startIndex, offsetBy: Self.hint.count+1)
+        let endIndex = line.endIndex
+        let plainText = String(line[startIndex..<endIndex])
+        guard let version = Int(plainText) else {
             return nil
         }
         self.init(version: version)

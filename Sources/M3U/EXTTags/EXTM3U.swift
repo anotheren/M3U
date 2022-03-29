@@ -20,7 +20,8 @@ extension EXTM3U: EXTTag {
     }
     
     public init?(lines: [String]) {
-        guard lines[0].hasPrefix(Self.hint) else {
+        let line = lines[0]
+        guard line.hasPrefix(Self.hint) else {
             return nil
         }
         self.init()

@@ -13,8 +13,7 @@ public struct EXT_X_MEDIA: Equatable, EXTPropertyTag {
     
     var properties: OrderedDictionary<PropertyKey, EXTPropertyValue>
     
-    init(keyValues: [(PropertyKey, EXTPropertyValue)]) {
-        let properties = OrderedDictionary(uniqueKeysWithValues: keyValues)
+    init(properties: OrderedDictionary<PropertyKey, EXTPropertyValue>) {
         self.properties = properties
     }
 }
@@ -123,24 +122,18 @@ extension EXT_X_MEDIA: EXTTag {
     }
     
     public init?(lines: [String]) {
-        guard lines[0].hasPrefix(Self.hint) else {
+        let line = lines[0]
+        guard line.hasPrefix(Self.hint) else {
             return nil
         }
-        let items = lines[0].replacingOccurrences(of: "\(Self.hint):", with: "").split(separator: ",")
-        let keyValues: [(PropertyKey, EXTPropertyValue)] = items.compactMap { item in
-            let keyValue = item.split(separator: "=")
-            guard keyValue.count == 2 else { return nil }
-            let key = String(keyValue[0])
-            let value = String(keyValue[1])
-            return (PropertyKey(rawValue: key), EXTPropertyValue(value))
-        }
-        self.init(keyValues: keyValues)
+        let startIndex = line.index(line.startIndex, offsetBy: Self.hint.count+1)
+        let endIndex = line.endIndex
+        let plainText = String(line[startIndex..<endIndex])
+        self.init(properties: EXTTagBuilder.decodeKeyValues(plainText: plainText))
     }
     
     public var lines: [String] {
-        let items = properties.map { "\($0.key.rawValue)=\($0.value.value)"}
-        let description = Self.hint + ":" + items.joined(separator: ",")
-        return [description]
+        [Self.hint + ":" + EXTTagBuilder.encodeKeyValues(properties: properties)]
     }
 }
 
