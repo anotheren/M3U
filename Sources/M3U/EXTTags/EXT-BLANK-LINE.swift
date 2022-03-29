@@ -20,7 +20,7 @@ extension EXT_BLANK_LINE: EXTTag {
     }
     
     public init?(lines: [String]) {
-        guard lines[0].hasPrefix(EXT_BLANK_LINE.hint) else {
+        guard lines[0].hasPrefix(Self.hint) else {
             return nil
         }
         self.init()

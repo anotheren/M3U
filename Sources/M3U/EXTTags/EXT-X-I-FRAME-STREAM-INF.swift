@@ -76,26 +76,23 @@ extension EXT_X_I_FRAME_STREAM_INF: EXTTag {
     }
     
     public init?(lines: [String]) {
-        guard lines[0].hasPrefix(EXT_X_I_FRAME_STREAM_INF.hint) else {
+        guard lines[0].hasPrefix(Self.hint) else {
             return nil
         }
-        let items = lines[0].replacingOccurrences(of: "\(EXT_X_I_FRAME_STREAM_INF.hint):", with: "").split(separator: ",")
+        let items = lines[0].replacingOccurrences(of: "\(Self.hint):", with: "").split(separator: ",")
         let keyValues: [(PropertyKey, EXTPropertyValue)] = items.compactMap { item in
             let keyValue = item.split(separator: "=")
-            if keyValue.count == 2 {
-                let key = String(keyValue[0])
-                let value = String(keyValue[1])
-                return (PropertyKey(rawValue: key), EXTPropertyValue(value))
-            } else {
-                return nil
-            }
+            guard keyValue.count == 2 else { return nil }
+            let key = String(keyValue[0])
+            let value = String(keyValue[1])
+            return (PropertyKey(rawValue: key), EXTPropertyValue(value))
         }
         self.init(keyValues: keyValues)
     }
     
     public var lines: [String] {
         let items = properties.map { "\($0.key.rawValue)=\($0.value.value)"}
-        let description = EXT_X_I_FRAME_STREAM_INF.hint + ":" + items.joined(separator: ",")
+        let description = Self.hint + ":" + items.joined(separator: ",")
         return [description]
     }
 }

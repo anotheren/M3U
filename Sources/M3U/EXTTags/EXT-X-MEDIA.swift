@@ -98,10 +98,21 @@ extension EXT_X_MEDIA {
         static let forced =      PropertyKey(rawValue: "FORCED")
     }
     
-    public enum ContentType: String {
-        case audio          = "AUDIO"
-        case closedCaption  = "CLOSED-CAPTION"
-        case subtitles      = "SUBTITLES"
+    public struct ContentType: RawRepresentable, Equatable, CustomStringConvertible {
+        
+        public let rawValue: String
+        
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+        
+        public var description: String {
+            rawValue
+        }
+        
+        public static let audio = ContentType(rawValue: "AUDIO")
+        public static let closedCaption = ContentType(rawValue: "CLOSED-CAPTION")
+        public static let subtitles = ContentType(rawValue: "SUBTITLES")
     }
 }
 
@@ -112,26 +123,23 @@ extension EXT_X_MEDIA: EXTTag {
     }
     
     public init?(lines: [String]) {
-        guard lines[0].hasPrefix(EXT_X_MEDIA.hint) else {
+        guard lines[0].hasPrefix(Self.hint) else {
             return nil
         }
-        let items = lines[0].replacingOccurrences(of: "\(EXT_X_MEDIA.hint):", with: "").split(separator: ",")
+        let items = lines[0].replacingOccurrences(of: "\(Self.hint):", with: "").split(separator: ",")
         let keyValues: [(PropertyKey, EXTPropertyValue)] = items.compactMap { item in
             let keyValue = item.split(separator: "=")
-            if keyValue.count == 2 {
-                let key = String(keyValue[0])
-                let value = String(keyValue[1])
-                return (PropertyKey(rawValue: key), EXTPropertyValue(value))
-            } else {
-                return nil
-            }
+            guard keyValue.count == 2 else { return nil }
+            let key = String(keyValue[0])
+            let value = String(keyValue[1])
+            return (PropertyKey(rawValue: key), EXTPropertyValue(value))
         }
         self.init(keyValues: keyValues)
     }
     
     public var lines: [String] {
         let items = properties.map { "\($0.key.rawValue)=\($0.value.value)"}
-        let description = EXT_X_MEDIA.hint + ":" + items.joined(separator: ",")
+        let description = Self.hint + ":" + items.joined(separator: ",")
         return [description]
     }
 }

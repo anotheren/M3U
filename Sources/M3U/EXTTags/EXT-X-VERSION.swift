@@ -29,10 +29,10 @@ extension EXT_X_VERSION: EXTTag {
     }
     
     public init?(lines: [String]) {
-        guard lines[0].hasPrefix(EXT_X_VERSION.hint) else {
+        guard lines[0].hasPrefix(Self.hint) else {
             return nil
         }
-        let versionText = lines[0].replacingOccurrences(of: "\(EXT_X_VERSION.hint):", with: "")
+        let versionText = lines[0].replacingOccurrences(of: "\(Self.hint):", with: "")
         guard let version = Int(versionText) else {
             return nil
         }
@@ -40,7 +40,7 @@ extension EXT_X_VERSION: EXTTag {
     }
     
     public var lines: [String] {
-        ["\(EXT_X_VERSION.hint):\(version)"]
+        ["\(Self.hint):\(version)"]
     }
 }
 

@@ -20,14 +20,14 @@ extension EXTM3U: EXTTag {
     }
     
     public init?(lines: [String]) {
-        guard lines[0].hasPrefix(EXTM3U.hint) else {
+        guard lines[0].hasPrefix(Self.hint) else {
             return nil
         }
         self.init()
     }
     
     public var lines: [String] {
-        [EXTM3U.hint]
+        [Self.hint]
     }
 }
 

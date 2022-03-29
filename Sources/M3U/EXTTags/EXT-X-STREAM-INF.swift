@@ -20,13 +20,13 @@ extension EXT_X_STREAM_INF: EXTTag {
     }
     
     public init?(lines: [String]) {
-        guard lines[0].hasPrefix(EXT_X_STREAM_INF.hint) else {
+        guard lines[0].hasPrefix(Self.hint) else {
             return nil
         }
         self.init()
     }
     
     public var lines: [String] {
-        [EXT_X_STREAM_INF.hint]
+        [Self.hint]
     }
 }
