@@ -12,7 +12,7 @@ import OrderedCollections
 struct EXTTagBuilder {
     
     static func parser(lines: [String]) -> EXTTag? {
-        guard lines.count >= 1 else { return nil }
+        guard !lines.isEmpty else { return nil }
         guard let hint = lines[0].split(separator: ":").first else { return nil }
         switch hint {
         case EXTM3U.hint:
