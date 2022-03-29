@@ -135,3 +135,10 @@ extension EXT_X_MEDIA: EXTTag {
         return [description]
     }
 }
+
+extension EXT_X_MEDIA: CustomStringConvertible {
+    
+    public var description: String {
+        "EXT-X-MEDIA(\(properties))"
+    }
+}

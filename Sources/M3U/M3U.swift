@@ -28,8 +28,19 @@ extension M3U {
     
     public init?(string: String) {
         guard !string.isEmpty else { return nil }
+        var checkedString = string
+        
+        func checkBlankLine() {
+            if checkedString.contains("\n\n") {
+                checkedString = checkedString.replacingOccurrences(of: "\n\n", with: "\n\(EXT_BLANK_LINE.hint)\n")
+                checkBlankLine()
+            }
+        }
+        
+        checkBlankLine()
+        
         var tags = [EXTTag]()
-        let lines = string.split(separator: "\n")
+        let lines = checkedString.split(separator: "\n")
         for (index, line) in lines.enumerated() {
             if line.hasPrefix("#") {
                 let hasNextLine = index < lines.count-1
@@ -39,7 +50,7 @@ extension M3U {
                     if let tag = EXTTagBuilder.parser(lines: lines) {
                         tags.append(tag)
                     } else {
-                        tags.append(EXTUnknown(lines: lines))
+                        tags.append(EXT_UNKNOWN(lines: lines))
                     }
                 } else {
                     // tag with only ONE line
@@ -47,7 +58,7 @@ extension M3U {
                     if let tag = EXTTagBuilder.parser(lines: lines) {
                         tags.append(tag)
                     } else {
-                        tags.append(EXTUnknown(lines: lines))
+                        tags.append(EXT_UNKNOWN(lines: lines))
                     }
                 }
             }

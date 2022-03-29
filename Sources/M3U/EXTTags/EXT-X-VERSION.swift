@@ -43,3 +43,10 @@ extension EXT_X_VERSION: EXTTag {
         ["\(EXT_X_VERSION.hint):\(version)"]
     }
 }
+
+extension EXT_X_VERSION: CustomStringConvertible {
+    
+    public var description: String {
+        "EXT-X-VERSION(version:\(version))"
+    }
+}

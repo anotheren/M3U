@@ -30,3 +30,10 @@ extension EXT_X_INDEPENDENT_SEGMENTS: EXTTag {
         [EXT_X_INDEPENDENT_SEGMENTS.hint]
     }
 }
+
+extension EXT_X_INDEPENDENT_SEGMENTS: CustomStringConvertible {
+    
+    public var description: String {
+        "EXT-X-INDEPENDENT-SEGMENTS()"
+    }
+}
