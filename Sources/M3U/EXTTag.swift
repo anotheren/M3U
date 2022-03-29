@@ -8,7 +8,7 @@
 
 import Foundation
  
-public protocol EXTTag {
+public protocol EXTTag: CustomStringConvertible {
     
     static var hint: String { get }
     

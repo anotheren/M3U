@@ -23,14 +23,14 @@ extension M3U {
         guard let string = String(data: data, encoding: .utf8) else {
             return nil
         }
-        self.init(string: string)
+        self.init(plainText: string)
     }
     
-    public init?(string: String) {
-        guard !string.isEmpty else { return nil }
+    public init?(plainText: String) {
+        guard !plainText.isEmpty else { return nil }
         
         var tags = [EXTTag]()
-        let lines = string.split(separator: "\n", omittingEmptySubsequences: false)
+        let lines = plainText.split(separator: "\n", omittingEmptySubsequences: false)
         for (index, line) in lines.enumerated() {
             if line.isEmpty {
                 tags.append(EXT_BLANK_LINE())
@@ -50,5 +50,29 @@ extension M3U {
             }
         }
         self.init(tags: tags)
+    }
+}
+
+extension M3U {
+    
+    public var lines: [String] {
+        var lines = [String]()
+        for tag in tags {
+            lines.append(contentsOf: tag.lines)
+        }
+        return lines
+    }
+    
+    public var plainText: String {
+        return lines.joined(separator: "\n")
+    }
+}
+
+extension M3U: CustomStringConvertible {
+    
+    public var description: String {
+        return tags
+            .map { $0.description }
+            .joined(separator: "\n")
     }
 }
