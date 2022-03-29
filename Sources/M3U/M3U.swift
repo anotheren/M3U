@@ -36,7 +36,7 @@ extension M3U {
                 tags.append(EXT_BLANK_LINE())
             } else if line.hasPrefix("#") {
                 let hasNextLine = index < lines.count-1
-                if hasNextLine, !lines[index+1].hasPrefix("#") {
+                if hasNextLine, !lines[index+1].isEmpty, !lines[index+1].hasPrefix("#") {
                     // tag with TWO lines
                     let lines = [String(line), String(lines[index+1])]
                     let tag = EXTTagBuilder.parser(lines: lines) ?? EXT_UNKNOWN(lines: lines)

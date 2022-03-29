@@ -12,15 +12,19 @@ struct EXTTagBuilder {
     
     static func parser(lines: [String]) -> EXTTag? {
         guard lines.count >= 1 else { return nil }
-        if lines[0].hasPrefix(EXTM3U.hint) {
+        guard let hint = lines[0].split(separator: ":").first else { return nil }
+        switch hint {
+        case EXTM3U.hint:
             return EXTM3U(lines: lines)
-        } else if lines[0].hasPrefix(EXT_X_VERSION.hint) {
+        case EXT_X_VERSION.hint:
             return EXT_X_VERSION(lines: lines)
-        } else if lines[0].hasPrefix(EXT_X_INDEPENDENT_SEGMENTS.hint) {
+        case EXT_X_INDEPENDENT_SEGMENTS.hint:
             return EXT_X_INDEPENDENT_SEGMENTS(lines: lines)
-        } else if lines[0].hasPrefix(EXT_X_MEDIA.hint) {
+        case EXT_X_MEDIA.hint:
             return EXT_X_MEDIA(lines: lines)
-        } else {
+        case EXT_X_I_FRAME_STREAM_INF.hint:
+            return EXT_X_I_FRAME_STREAM_INF(lines: lines)
+        default:
             return nil
         }
     }
