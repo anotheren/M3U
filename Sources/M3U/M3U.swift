@@ -28,33 +28,24 @@ extension M3U {
     
     public init?(string: String) {
         guard !string.isEmpty else { return nil }
-        var checkedString = string
-        
-        repeat {
-            checkedString = checkedString.replacingOccurrences(of: "\n\n", with: "\n\(EXT_BLANK_LINE.hint)\n")
-        } while checkedString.contains("\n\n")
         
         var tags = [EXTTag]()
-        let lines = checkedString.split(separator: "\n")
+        let lines = string.split(separator: "\n",omittingEmptySubsequences: false)
         for (index, line) in lines.enumerated() {
-            if line.hasPrefix("#") {
+            if line.isEmpty {
+                tags.append(EXT_BLANK_LINE())
+            } else if line.hasPrefix("#") {
                 let hasNextLine = index < lines.count-1
                 if hasNextLine, !lines[index+1].hasPrefix("#") {
                     // tag with TWO lines
                     let lines = [String(line), String(lines[index+1])]
-                    if let tag = EXTTagBuilder.parser(lines: lines) {
-                        tags.append(tag)
-                    } else {
-                        tags.append(EXT_UNKNOWN(lines: lines))
-                    }
+                    let tag = EXTTagBuilder.parser(lines: lines) ?? EXT_UNKNOWN(lines: lines)
+                    tags.append(tag)
                 } else {
                     // tag with only ONE line
                     let lines = [String(line)]
-                    if let tag = EXTTagBuilder.parser(lines: lines) {
-                        tags.append(tag)
-                    } else {
-                        tags.append(EXT_UNKNOWN(lines: lines))
-                    }
+                    let tag = EXTTagBuilder.parser(lines: lines) ?? EXT_UNKNOWN(lines: lines)
+                    tags.append(tag)
                 }
             }
         }

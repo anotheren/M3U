@@ -16,8 +16,6 @@ struct EXTTagBuilder {
             return EXTM3U(lines: lines)
         } else if lines[0].hasPrefix(EXT_X_VERSION.hint) {
             return EXT_X_VERSION(lines: lines)
-        } else if lines[0].hasPrefix(EXT_BLANK_LINE.hint) {
-            return EXT_BLANK_LINE(lines: lines)
         } else if lines[0].hasPrefix(EXT_X_INDEPENDENT_SEGMENTS.hint) {
             return EXT_X_INDEPENDENT_SEGMENTS(lines: lines)
         } else if lines[0].hasPrefix(EXT_X_MEDIA.hint) {
