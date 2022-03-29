@@ -30,7 +30,7 @@ extension M3U {
         guard !string.isEmpty else { return nil }
         
         var tags = [EXTTag]()
-        let lines = string.split(separator: "\n",omittingEmptySubsequences: false)
+        let lines = string.split(separator: "\n", omittingEmptySubsequences: false)
         for (index, line) in lines.enumerated() {
             if line.isEmpty {
                 tags.append(EXT_BLANK_LINE())
