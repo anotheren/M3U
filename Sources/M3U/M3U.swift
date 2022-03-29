@@ -30,14 +30,9 @@ extension M3U {
         guard !string.isEmpty else { return nil }
         var checkedString = string
         
-        func checkBlankLine() {
-            if checkedString.contains("\n\n") {
-                checkedString = checkedString.replacingOccurrences(of: "\n\n", with: "\n\(EXT_BLANK_LINE.hint)\n")
-                checkBlankLine()
-            }
-        }
-        
-        checkBlankLine()
+        repeat {
+            checkedString = checkedString.replacingOccurrences(of: "\n\n", with: "\n\(EXT_BLANK_LINE.hint)\n")
+        } while checkedString.contains("\n\n")
         
         var tags = [EXTTag]()
         let lines = checkedString.split(separator: "\n")
