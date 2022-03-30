@@ -8,6 +8,16 @@
 
 import Foundation
 
+/// EXT-X-TARGETDURATION
+///
+/// The EXT-X-TARGETDURATION tag specifies the maximum Media Segment
+/// duration.  The EXTINF duration of each Media Segment in the Playlist
+/// file, when rounded to the nearest integer, MUST be less than or equal
+/// to the target duration; longer segments can trigger playback stalls
+/// or other errors.  It applies to the entire Playlist file.
+///
+/// > https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.3.1
+///
 public struct EXT_X_TARGETDURATION: Equatable {
     
     public var seconds: Int
