@@ -15,18 +15,28 @@ struct EXTTagBuilder {
         guard !lines.isEmpty else { return nil }
         guard let hint = lines[0].split(separator: ":").first else { return nil }
         switch hint {
+        // 4.3.1 Basic Tags
         case EXTM3U.hint:
             return EXTM3U(lines: lines)
         case EXT_X_VERSION.hint:
             return EXT_X_VERSION(lines: lines)
-        case EXT_X_INDEPENDENT_SEGMENTS.hint:
-            return EXT_X_INDEPENDENT_SEGMENTS(lines: lines)
+            
+        // 4.3.2 Media Segment Tags
+        case EXT_X_TARGETDURATION.hint:
+            return EXT_X_TARGETDURATION(lines: lines)
+         
+        // 4.3.3 Media Playlist Tags
         case EXT_X_MEDIA.hint:
             return EXT_X_MEDIA(lines: lines)
-        case EXT_X_I_FRAME_STREAM_INF.hint:
-            return EXT_X_I_FRAME_STREAM_INF(lines: lines)
         case EXT_X_STREAM_INF.hint:
             return EXT_X_STREAM_INF(lines: lines)
+        case EXT_X_I_FRAME_STREAM_INF.hint:
+            return EXT_X_I_FRAME_STREAM_INF(lines: lines)
+        
+        // 4.3.5 Media or Master Playlist Tags
+        case EXT_X_INDEPENDENT_SEGMENTS.hint:
+            return EXT_X_INDEPENDENT_SEGMENTS(lines: lines)
+        
         default:
             return nil
         }
