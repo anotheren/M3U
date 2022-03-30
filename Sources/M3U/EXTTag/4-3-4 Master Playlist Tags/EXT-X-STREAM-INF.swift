@@ -55,9 +55,9 @@ extension EXT_X_STREAM_INF {
         set { properties[.resolution] = newValue.flatMap { .init(resolution: $0) } }
     }
     
-    public var frameRate: Double? {
+    public var frameRate: Decimal? {
         get { properties[.frameRate]?.load() }
-        set { properties[.frameRate] = newValue.flatMap { .init(double: $0) } }
+        set { properties[.frameRate] = newValue.flatMap { .init(decimal: $0) } }
     }
     
     public var closedCaptions: String? {

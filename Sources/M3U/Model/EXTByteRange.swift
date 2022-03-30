@@ -18,3 +18,21 @@ public struct EXTByteRange: Equatable {
         self.offset = offset
     }
 }
+
+extension EXTByteRange {
+    
+    init?(string: String) {
+        let items = string.split(separator: "@")
+        guard items.count == 2, let length = Int(items[0]), let offset = Int(items[1]) else {
+            return nil
+        }
+        self.init(length: length, offset: offset)
+    }
+}
+
+extension EXTByteRange: CustomStringConvertible {
+    
+    public var description: String {
+        "\(length)@\(offset)"
+    }
+}

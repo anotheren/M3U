@@ -78,15 +78,15 @@ extension EXTPropertyValue {
 // MARK: Double
 extension EXTPropertyValue {
     
-    func load() -> Double? {
-        guard let double = Double(value) else {
+    func load() -> Decimal? {
+        guard let decimal = Decimal(string: value) else {
             return nil
         }
-        return double
+        return decimal
     }
     
-    init(double: Double) {
-        self.init(String(format: "%0.3f", arguments: [double]))
+    init(decimal: Decimal) {
+        self.init("\(decimal)")
     }
 }
 
@@ -94,15 +94,11 @@ extension EXTPropertyValue {
 extension EXTPropertyValue {
     
     func load() -> EXTResolution? {
-        let items = value.split(separator: "x")
-        guard items.count == 2, let width = Int(items[0]), let height = Int(items[1]) else {
-            return nil
-        }
-        return EXTResolution(width: width, height: height)
+        EXTResolution(string: value)
     }
     
     init(resolution: EXTResolution) {
-        self.init("\(resolution.width)x\(resolution.height)")
+        self.init("\(resolution)")
     }
 }
 

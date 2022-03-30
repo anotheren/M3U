@@ -21,6 +21,14 @@ struct EXTTagBuilder {
         case EXT_X_VERSION.hint:
             return EXT_X_VERSION(lines: lines)
             
+        // 4.3.2 Media Segment Tags
+        case EXTINF.hint:
+            return EXTINF(lines: lines)
+        case EXT_X_BITRATE.hint:
+            return EXT_X_BITRATE(lines: lines)
+        case EXT_X_BYTERANGE.hint:
+            return EXT_X_BYTERANGE(lines: lines)
+            
         // 4.3.3 Media Segment Tags
         case EXT_X_TARGETDURATION.hint:
             return EXT_X_TARGETDURATION(lines: lines)

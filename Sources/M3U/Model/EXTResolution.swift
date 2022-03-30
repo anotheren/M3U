@@ -18,3 +18,21 @@ public struct EXTResolution: Equatable {
         self.height = height
     }
 }
+
+extension EXTResolution {
+    
+    init?(string: String) {
+        let items = string.split(separator: "x")
+        guard items.count == 2, let width = Int(items[0]), let height = Int(items[1]) else {
+            return nil
+        }
+        self.init(width: width, height: height)
+    }
+}
+
+extension EXTResolution: CustomStringConvertible {
+    
+    public var description: String {
+        "\(width)x\(height)"
+    }
+}

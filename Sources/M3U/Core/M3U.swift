@@ -19,28 +19,49 @@ public struct M3U {
 
 extension M3U {
     
+    public var data: Data? {
+        string.data(using: .utf8)
+    }
+    
     public init?(data: Data) {
         guard let string = String(data: data, encoding: .utf8) else {
             return nil
         }
-        self.init(plainText: string)
+        self.init(string: string)
+    }
+}
+
+extension M3U {
+    
+    public var string: String {
+        return lines.joined(separator: "\n")
     }
     
-    public init?(plainText: String) {
-        guard !plainText.isEmpty else { return nil }
+    public init?(string: String) {
+        guard !string.isEmpty else { return nil }
         
         var tags = [EXTTag]()
-        let lines = plainText.split(separator: "\n", omittingEmptySubsequences: false)
+        var skipIndexs = [Int]()
+        let lines = string.split(separator: "\n", omittingEmptySubsequences: false)
         for (index, line) in lines.enumerated() {
-            if line.isEmpty {
+            if skipIndexs.contains(index) {
+                continue
+            } else if line.isEmpty {
                 tags.append(EXT_BLANK_LINE())
             } else if line.hasPrefix("#") {
                 let hasNextLine = index < lines.count-1
-                if hasNextLine, !lines[index+1].isEmpty, !lines[index+1].hasPrefix("#") {
+                if line.hasSuffix("\t"), hasNextLine, index < lines.count-2, lines[index+1].hasPrefix("#") {
+                    // tag with THREE lines, for example, EXTINF contains EXT-X-BITRATE/EXT-X-BYTERANGE
+                    let lines = [String(line), String(lines[index+1]), String(lines[index+2])]
+                    let tag = EXTTagBuilder.parser(lines: lines) ?? EXT_UNKNOWN(lines: lines)
+                    tags.append(tag)
+                    skipIndexs.append(contentsOf: [index+1, index+2])
+                } else if hasNextLine, !lines[index+1].isEmpty, !lines[index+1].hasPrefix("#") {
                     // tag with TWO lines
                     let lines = [String(line), String(lines[index+1])]
                     let tag = EXTTagBuilder.parser(lines: lines) ?? EXT_UNKNOWN(lines: lines)
                     tags.append(tag)
+                    skipIndexs.append(index+1)
                 } else {
                     // tag with only ONE line
                     let lines = [String(line)]
@@ -61,10 +82,6 @@ extension M3U {
             lines.append(contentsOf: tag.lines)
         }
         return lines
-    }
-    
-    public var plainText: String {
-        return lines.joined(separator: "\n")
     }
 }
 
