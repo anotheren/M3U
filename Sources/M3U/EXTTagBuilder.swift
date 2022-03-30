@@ -21,13 +21,15 @@ struct EXTTagBuilder {
         case EXT_X_VERSION.hint:
             return EXT_X_VERSION(lines: lines)
             
-        // 4.3.2 Media Segment Tags
+        // 4.3.3 Media Segment Tags
         case EXT_X_TARGETDURATION.hint:
             return EXT_X_TARGETDURATION(lines: lines)
         case EXT_X_MEDIA_SEQUENCE.hint:
             return EXT_X_MEDIA_SEQUENCE(lines: lines)
+        case EXT_X_ENDLIST.hint:
+            return EXT_X_ENDLIST(lines: lines)
          
-        // 4.3.3 Media Playlist Tags
+        // 4.3.4 Media Playlist Tags
         case EXT_X_MEDIA.hint:
             return EXT_X_MEDIA(lines: lines)
         case EXT_X_STREAM_INF.hint:
