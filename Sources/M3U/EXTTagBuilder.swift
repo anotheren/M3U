@@ -24,6 +24,8 @@ struct EXTTagBuilder {
         // 4.3.2 Media Segment Tags
         case EXT_X_TARGETDURATION.hint:
             return EXT_X_TARGETDURATION(lines: lines)
+        case EXT_X_MEDIA_SEQUENCE.hint:
+            return EXT_X_MEDIA_SEQUENCE(lines: lines)
          
         // 4.3.3 Media Playlist Tags
         case EXT_X_MEDIA.hint:
