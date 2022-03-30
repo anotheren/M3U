@@ -28,6 +28,8 @@ struct EXTTagBuilder {
             return EXT_X_MEDIA_SEQUENCE(lines: lines)
         case EXT_X_ENDLIST.hint:
             return EXT_X_ENDLIST(lines: lines)
+        case EXT_X_PLAYLIST_TYPE.hint:
+            return EXT_X_PLAYLIST_TYPE(lines: lines)
          
         // 4.3.4 Media Playlist Tags
         case EXT_X_MEDIA.hint:

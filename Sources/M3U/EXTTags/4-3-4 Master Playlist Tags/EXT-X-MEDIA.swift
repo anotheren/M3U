@@ -98,16 +98,16 @@ extension EXT_X_MEDIA {
             rawValue
         }
         
-        static let type =        PropertyKey(rawValue: "TYPE")
-        static let groupID =     PropertyKey(rawValue: "GROUP-ID")
-        static let language =    PropertyKey(rawValue: "LANGUAGE")
-        static let name =        PropertyKey(rawValue: "NAME")
-        static let `default` =   PropertyKey(rawValue: "DEFAULT")
-        static let autoselect =  PropertyKey(rawValue: "AUTOSELECT")
-        static let instreamID =  PropertyKey(rawValue: "INSTREAM-ID")
-        static let channels =    PropertyKey(rawValue: "CHANNELS")
-        static let uri =         PropertyKey(rawValue: "URI")
-        static let forced =      PropertyKey(rawValue: "FORCED")
+        static let type       = PropertyKey(rawValue: "TYPE")
+        static let groupID    = PropertyKey(rawValue: "GROUP-ID")
+        static let language   = PropertyKey(rawValue: "LANGUAGE")
+        static let name       = PropertyKey(rawValue: "NAME")
+        static let `default`  = PropertyKey(rawValue: "DEFAULT")
+        static let autoselect = PropertyKey(rawValue: "AUTOSELECT")
+        static let instreamID = PropertyKey(rawValue: "INSTREAM-ID")
+        static let channels   = PropertyKey(rawValue: "CHANNELS")
+        static let uri        = PropertyKey(rawValue: "URI")
+        static let forced     = PropertyKey(rawValue: "FORCED")
     }
     
     public struct ContentType: RawRepresentable, Equatable, CustomStringConvertible {
