@@ -9,6 +9,19 @@
 import Foundation
 import OrderedCollections
 
+/// EXT-X-MEDIA
+///
+/// The EXT-X-MEDIA tag is used to relate Media Playlists that contain
+/// alternative Renditions (Section 4.3.4.2.1) of the same content.  For
+/// example, three EXT-X-MEDIA tags can be used to identify audio-only
+/// Media Playlists that contain English, French, and Spanish Renditions
+/// of the same presentation.  Or, two EXT-X-MEDIA tags can be used to
+/// identify video-only Media Playlists that show two different camera
+/// angles.
+///
+/// > https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.4.1
+///
+
 public struct EXT_X_MEDIA: Equatable, EXTPropertyTag {
     
     var properties: OrderedDictionary<PropertyKey, EXTPropertyValue>

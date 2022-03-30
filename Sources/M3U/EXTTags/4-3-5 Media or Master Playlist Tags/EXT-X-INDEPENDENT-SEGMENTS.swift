@@ -8,6 +8,14 @@
 
 import Foundation
 
+/// EXT-X-INDEPENDENT-SEGMENTS
+///
+/// The EXT-X-INDEPENDENT-SEGMENTS tag indicates that all media samples
+/// in a Media Segment can be decoded without information from other
+/// segments.  It applies to every Media Segment in the Playlist.
+///
+/// > https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.5.1
+///
 public struct EXT_X_INDEPENDENT_SEGMENTS: Equatable {
     
     public init() { }

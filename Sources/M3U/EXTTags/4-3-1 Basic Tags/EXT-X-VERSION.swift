@@ -10,8 +10,11 @@ import Foundation
 
 /// EXT-X-VERSION
 ///
-/// About the EXT-X-VERSION tag
-/// https://developer.apple.com/documentation/http_live_streaming/about_the_ext-x-version_tag
+/// The EXT-X-VERSION tag indicates the compatibility version of the
+/// Playlist file, its associated media, and its server.
+///
+/// > https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.1.2
+/// > https://developer.apple.com/documentation/http_live_streaming/about_the_ext-x-version_tag
 ///
 public struct EXT_X_VERSION: Equatable {
     

@@ -8,6 +8,14 @@
 
 import Foundation
 
+/// EXTM3U
+///
+/// The EXTM3U tag indicates that the file is an Extended M3U
+/// Playlist file.  It MUST be the first line of every Media Playlist and
+/// every Master Playlist.
+///
+/// >  https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.1.1
+///
 public struct EXTM3U: Equatable {
     
     public init() { }

@@ -9,6 +9,19 @@
 import Foundation
 import OrderedCollections
 
+/// EXT-X-STREAM-INF
+///
+/// The EXT-X-STREAM-INF tag specifies a Variant Stream, which is a set
+/// of Renditions that can be combined to play the presentation.  The
+/// attributes of the tag provide information about the Variant Stream.
+///
+/// The URI line that follows the EXT-X-STREAM-INF tag specifies a Media
+/// Playlist that carries a Rendition of the Variant Stream.  The URI
+/// line is REQUIRED.  Clients that do not support multiple video
+/// Renditions SHOULD play this Rendition.
+///
+/// > https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.4.2
+
 public struct EXT_X_STREAM_INF: Equatable, EXTPropertyTag {
     
     var properties: OrderedDictionary<PropertyKey, EXTPropertyValue>

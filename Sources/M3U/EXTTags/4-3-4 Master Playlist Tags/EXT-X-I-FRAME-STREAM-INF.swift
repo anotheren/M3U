@@ -9,6 +9,15 @@
 import Foundation
 import OrderedCollections
 
+/// EXT-X-I-FRAME-STREAM-INF
+///
+/// The EXT-X-I-FRAME-STREAM-INF tag identifies a Media Playlist file
+/// containing the I-frames of a multimedia presentation.  It stands
+/// alone, in that it does not apply to a particular URI in the Master
+/// Playlist.
+///
+/// > https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.4.3
+
 public struct EXT_X_I_FRAME_STREAM_INF: Equatable, EXTPropertyTag {
     
     var properties: OrderedDictionary<PropertyKey, EXTPropertyValue>
