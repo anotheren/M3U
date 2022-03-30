@@ -28,14 +28,30 @@ final class M3UTests: XCTestCase {
         let masterURL = AppleHLSTestURL.advancedStream_TS.url
         let masterPlayList = try await loadM3U(url: masterURL)
         
-//        print(masterPlayList)
-        
+        if let stream_inf = masterPlayList.tags.compactMap({ $0 as? EXT_X_STREAM_INF }).randomElement() {
+            let url = masterURL.deletingLastPathComponent().appendingPathComponent(stream_inf.uri)
+            print("➡️ Load URL:\(url)")
+            print(url)
+            let playList = try await loadM3U(url: url)
+            print("➡️ Tags for M3U")
+            print(playList)
+            print("➡️ Plain Text for M3U")
+            print(playList.plainText)
+        }
+    }
+    
+    func testAppleHLS_advancedStream_fMP4() async throws {
+        let masterURL = AppleHLSTestURL.advancedStream_fMP4.url
+        let masterPlayList = try await loadM3U(url: masterURL)
         
         if let stream_inf = masterPlayList.tags.compactMap({ $0 as? EXT_X_STREAM_INF }).randomElement() {
             let url = masterURL.deletingLastPathComponent().appendingPathComponent(stream_inf.uri)
+            print("➡️ Load URL:\(url)")
             print(url)
             let playList = try await loadM3U(url: url)
+            print("➡️ Tags for M3U")
             print(playList)
+            print("➡️ Plain Text for M3U")
             print(playList.plainText)
         }
     }

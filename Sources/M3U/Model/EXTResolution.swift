@@ -10,8 +10,8 @@ import Foundation
 
 public struct EXTResolution: Equatable {
     
-    public var width: Int
-    public var height: Int
+    public let width: Int
+    public let height: Int
     
     public init(width: Int, height: Int) {
         self.width = width
