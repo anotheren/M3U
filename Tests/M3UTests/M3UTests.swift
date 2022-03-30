@@ -30,13 +30,7 @@ final class M3UTests: XCTestCase {
         
         if let stream_inf = masterPlayList.tags.compactMap({ $0 as? EXT_X_STREAM_INF }).randomElement() {
             let url = masterURL.deletingLastPathComponent().appendingPathComponent(stream_inf.uri)
-            print("➡️ Load URL:\(url)")
-            print(url)
             let playList = try await loadM3U(url: url)
-            print("➡️ Tags for M3U")
-            print(playList)
-            print("➡️ Plain Text for M3U")
-            print(playList.plainText)
         }
     }
     
@@ -46,13 +40,7 @@ final class M3UTests: XCTestCase {
         
         if let stream_inf = masterPlayList.tags.compactMap({ $0 as? EXT_X_STREAM_INF }).randomElement() {
             let url = masterURL.deletingLastPathComponent().appendingPathComponent(stream_inf.uri)
-            print("➡️ Load URL:\(url)")
-            print(url)
             let playList = try await loadM3U(url: url)
-            print("➡️ Tags for M3U")
-            print(playList)
-            print("➡️ Plain Text for M3U")
-            print(playList.plainText)
         }
     }
 }
@@ -60,6 +48,7 @@ final class M3UTests: XCTestCase {
 extension M3UTests {
     
     private func loadM3U(url: URL) async throws -> M3U {
+        print("➡️ Load URL:\(url)")
         let request = AF.request(url)
         let dataTask = request.serializingData()
         let data = try await dataTask.value
@@ -67,6 +56,10 @@ extension M3UTests {
         let m3u = M3U(plainText: plainText)!
         let newPlainText = m3u.plainText
         XCTAssertTrue(plainText == newPlainText)
+        print("➡️ Tags for M3U")
+        print(m3u)
+        print("➡️ Plain Text for M3U")
+        print(newPlainText)
         return m3u
     }
 }
