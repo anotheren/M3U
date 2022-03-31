@@ -10,7 +10,7 @@ import Foundation
 
 public struct EXT_UNKNOWN: Equatable {
     
-    public let content: [String]
+    private let content: [String]
 }
 
 extension EXT_UNKNOWN: EXTTag {

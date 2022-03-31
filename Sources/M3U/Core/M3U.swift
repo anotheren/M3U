@@ -53,19 +53,19 @@ extension M3U {
                 if line.hasSuffix("\t"), hasNextLine, index < lines.count-2, lines[index+1].hasPrefix("#") {
                     // tag with THREE lines, for example, EXTINF contains EXT-X-BITRATE/EXT-X-BYTERANGE
                     let lines = [String(line), String(lines[index+1]), String(lines[index+2])]
-                    let tag = EXTTagBuilder.parser(lines: lines) ?? EXT_UNKNOWN(lines: lines)
+                    let tag = EXTTagUtil.parser(lines: lines) ?? EXT_UNKNOWN(lines: lines)
                     tags.append(tag)
                     skipIndexs.append(contentsOf: [index+1, index+2])
                 } else if hasNextLine, !lines[index+1].isEmpty, !lines[index+1].hasPrefix("#") {
                     // tag with TWO lines
                     let lines = [String(line), String(lines[index+1])]
-                    let tag = EXTTagBuilder.parser(lines: lines) ?? EXT_UNKNOWN(lines: lines)
+                    let tag = EXTTagUtil.parser(lines: lines) ?? EXT_UNKNOWN(lines: lines)
                     tags.append(tag)
                     skipIndexs.append(index+1)
                 } else {
                     // tag with only ONE line
                     let lines = [String(line)]
-                    let tag = EXTTagBuilder.parser(lines: lines) ?? EXT_UNKNOWN(lines: lines)
+                    let tag = EXTTagUtil.parser(lines: lines) ?? EXT_UNKNOWN(lines: lines)
                     tags.append(tag)
                 }
             }

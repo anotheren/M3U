@@ -8,16 +8,35 @@
 
 import Foundation
 
+/// EXTINF
+///
+/// The EXTINF tag specifies the duration of a Media Segment.  It applies
+/// only to the next Media Segment.  This tag is REQUIRED for each Media
+/// Segment.
+///
+/// > https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.2.1
+///
 public struct EXTINF: Equatable {
     
-    public var duration: Decimal
+    public var value: String
     public var uri: String
     public var associatedTag: AssociatedTag?
     
-    public init(duration: Decimal, uri: String, associatedTag: AssociatedTag? = nil) {
-        self.duration = duration
+    public init(value: String, uri: String, associatedTag: AssociatedTag? = nil) {
+        self.value = value
         self.uri = uri
         self.associatedTag = associatedTag
+    }
+}
+
+extension EXTINF {
+    
+    public var byteRange: EXTByteRange? {
+        associatedTag?.byteRange?.range
+    }
+    
+    public var bitRate: Int? {
+        associatedTag?.bitRate?.rate
     }
 }
 
@@ -77,22 +96,23 @@ extension EXTINF: EXTTag {
         let startIndex = line0.index(line0.startIndex, offsetBy: Self.hint.count+1)
         let endIndex = hasAssociatedTag ? line0.index(line0.endIndex, offsetBy: -1) : line0.endIndex
         let plainText = line0[startIndex..<endIndex]
-        guard let value = plainText.split(separator: ",").first, let duration = Decimal(string: String(value)) else {
+        guard let durationValue = plainText.split(separator: ",").first else {
             return nil
         }
+        let value = String(durationValue)
         guard let uri = lines.last, !uri.hasPrefix("#") else {
             return nil
         }
         var associatedTag: AssociatedTag?
-        if lines.count-1 > 1, hasAssociatedTag, let tag = EXTTagBuilder.parser(lines: Array(lines[1..<lines.count-1])) {
+        if lines.count-1 > 1, hasAssociatedTag, let tag = EXTTagUtil.parser(lines: Array(lines[1..<lines.count-1])) {
             associatedTag = AssociatedTag(rawValue: tag)
         }
-        self.init(duration: duration, uri: uri, associatedTag: associatedTag)
+        self.init(value: value, uri: uri, associatedTag: associatedTag)
     }
     
     public var lines: [String] {
         var lines = [String]()
-        lines.append("\(Self.hint):\(duration),")
+        lines.append("\(Self.hint):\(value),")
         if let tag = associatedTag?.rawValue {
             lines[0].append("\t")
             lines.append(contentsOf: tag.lines)
@@ -105,7 +125,7 @@ extension EXTINF: EXTTag {
 extension EXTINF: CustomStringConvertible {
     
     public var description: String {
-        var description = "EXTINF(duration:\(duration)"
+        var description = "EXTINF(duration:\(value)"
         if let byteRange = associatedTag?.byteRange {
             description.append(contentsOf: ",byteRange:\(byteRange.range)")
         }

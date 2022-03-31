@@ -142,11 +142,11 @@ extension EXT_X_MEDIA: EXTTag {
         let startIndex = line.index(line.startIndex, offsetBy: Self.hint.count+1)
         let endIndex = line.endIndex
         let plainText = String(line[startIndex..<endIndex])
-        self.init(properties: EXTTagBuilder.decodeKeyValues(plainText: plainText))
+        self.init(properties: EXTTagUtil.decodeKeyValues(plainText: plainText))
     }
     
     public var lines: [String] {
-        [Self.hint + ":" + EXTTagBuilder.encodeKeyValues(properties: properties)]
+        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: properties)]
     }
 }
 

@@ -78,15 +78,22 @@ extension EXTPropertyValue {
 // MARK: Double
 extension EXTPropertyValue {
     
-    func load() -> Decimal? {
-        guard let decimal = Decimal(string: value) else {
+    func load() -> Double? {
+        guard let double = Double(value) else {
             return nil
         }
-        return decimal
+        return double
     }
     
-    init(decimal: Decimal) {
-        self.init("\(decimal)")
+    init?(double: Double, fractionDigits: Int) {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = fractionDigits
+        formatter.minimumFractionDigits = fractionDigits
+        guard let value = formatter.string(from: NSNumber(value: double)) else {
+            return nil
+        }
+        self.init(value)
     }
 }
 

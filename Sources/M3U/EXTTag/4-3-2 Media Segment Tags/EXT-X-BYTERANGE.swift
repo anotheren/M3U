@@ -8,6 +8,14 @@
 
 import Foundation
 
+/// EXT-X-BYTERANGE
+///
+/// The EXT-X-BYTERANGE tag indicates that a Media Segment is a sub-range
+/// of the resource identified by its URI.  It applies only to the next
+/// URI line that follows it in the Playlist.
+///
+/// > https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.2.2
+///
 public struct EXT_X_BYTERANGE: Equatable {
     
     public var range: EXTByteRange
