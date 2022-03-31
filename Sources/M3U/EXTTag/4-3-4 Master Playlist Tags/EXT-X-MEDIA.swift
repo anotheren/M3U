@@ -121,7 +121,7 @@ extension EXT_X_MEDIA: EXTTag {
     }
     
     public var lines: [String] {
-        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributes)]
+        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(attributes: attributes)]
     }
 }
 

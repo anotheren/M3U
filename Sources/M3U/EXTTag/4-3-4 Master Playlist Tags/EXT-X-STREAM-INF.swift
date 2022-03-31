@@ -97,7 +97,7 @@ extension EXT_X_STREAM_INF: EXTTag {
     }
     
     public var lines: [String] {
-        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributes), uri]
+        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(attributes: attributes), uri]
     }
 }
 

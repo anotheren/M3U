@@ -34,6 +34,10 @@ struct EXTTagUtil {
         /// 4.3.2.2 EXT-X-BYTERANGE
         case EXT_X_BYTERANGE.hint:
             return EXT_X_BYTERANGE(lines: lines)
+        
+        /// 4.3.2.4 EXT-X-KEY
+        case EXT_X_KEY.hint:
+            return EXT_X_KEY(lines: lines)
             
         /// 4.3.2.5 EXT-X-MAP
         case EXT_X_MAP.hint:
@@ -96,17 +100,24 @@ extension EXTTagUtil {
         
         let keyValues: [(EXTAttributeKey, EXTAttributeValue)] = checkedItems.compactMap { item in
             let keyValue = item.split(separator: "=")
-            guard keyValue.count == 2 else { return nil }
-            let key = String(keyValue[0])
-            let value = String(keyValue[1])
-            return (EXTAttributeKey(rawValue: key), EXTAttributeValue(value))
+            if keyValue.count == 2 {
+                let key = String(keyValue[0])
+                let value = String(keyValue[1])
+                return (EXTAttributeKey(rawValue: key), EXTAttributeValue(value))
+            } else if keyValue.count > 2 {
+                let key = String(keyValue[0])
+                let value = keyValue[1..<keyValue.count].joined(separator: "=")
+                return (EXTAttributeKey(rawValue: key), EXTAttributeValue(value))
+            } else {
+                return nil
+            }
         }
         
         return EXTAttributeList(uniqueKeysWithValues: keyValues)
     }
     
-    static func encodeKeyValues(properties: EXTAttributeList) -> String {
-        return properties
+    static func encodeKeyValues(attributes: EXTAttributeList) -> String {
+        return attributes
             .map { "\($0.key.rawValue)=\($0.value.value)"}
             .joined(separator: ",")
     }

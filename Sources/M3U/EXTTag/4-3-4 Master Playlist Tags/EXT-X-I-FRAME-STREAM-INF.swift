@@ -72,7 +72,7 @@ extension EXT_X_I_FRAME_STREAM_INF: EXTTag {
     }
     
     public var lines: [String] {
-        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributes)]
+        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(attributes: attributes)]
     }
 }
 

@@ -22,8 +22,8 @@ public struct EXT_X_MAP: Equatable, EXTAttributesTag {
     
     var attributes: EXTAttributeList
     
-    init(properties: EXTAttributeList) {
-        self.attributes = properties
+    init(attributes: EXTAttributeList) {
+        self.attributes = attributes
     }
 }
 
@@ -76,11 +76,11 @@ extension EXT_X_MAP: EXTTag {
         let startIndex = line.index(line.startIndex, offsetBy: Self.hint.count+1)
         let endIndex = line.endIndex
         let plainText = String(line[startIndex..<endIndex])
-        self.init(properties: EXTTagUtil.decodeKeyValues(plainText: plainText))
+        self.init(attributes: EXTTagUtil.decodeKeyValues(plainText: plainText))
     }
     
     public var lines: [String] {
-        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributes)]
+        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(attributes: attributes)]
     }
 }
 

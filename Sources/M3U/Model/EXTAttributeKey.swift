@@ -45,4 +45,6 @@ extension EXTAttributeKey {
     public static let audio             = EXTAttributeKey(rawValue: "AUDIO")
     public static let subtitles         = EXTAttributeKey(rawValue: "SUBTITLES")
     public static let byterange         = EXTAttributeKey(rawValue: "BYTERANGE")
+    public static let method            = EXTAttributeKey(rawValue: "METHOD")
+    public static let iv                = EXTAttributeKey(rawValue: "IV")
 }
