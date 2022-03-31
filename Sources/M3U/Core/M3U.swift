@@ -77,11 +77,7 @@ extension M3U {
 extension M3U {
     
     public var lines: [String] {
-        var lines = [String]()
-        for tag in tags {
-            lines.append(contentsOf: tag.lines)
-        }
-        return lines
+        tags.reduce([]) { $0 + $1.lines }
     }
 }
 
