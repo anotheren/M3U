@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import OrderedCollections
 
 struct EXTTagUtil {
     
@@ -76,7 +75,7 @@ struct EXTTagUtil {
 
 extension EXTTagUtil {
     
-    static func decodeKeyValues<PropertyKey>(plainText: String) -> OrderedDictionary<PropertyKey, EXTPropertyValue> where PropertyKey: RawRepresentable, PropertyKey: Hashable, PropertyKey.RawValue == String {
+    static func decodeKeyValues(plainText: String) -> EXTAttributeList {
         let items = plainText.split(separator: ",")
         
         var checkedItems = [String.SubSequence]()
@@ -91,19 +90,18 @@ extension EXTTagUtil {
             }
         }
         
-        let keyValues: [(PropertyKey, EXTPropertyValue)] = checkedItems.compactMap { item in
+        let keyValues: [(EXTAttributeKey, EXTAttributeValue)] = checkedItems.compactMap { item in
             let keyValue = item.split(separator: "=")
             guard keyValue.count == 2 else { return nil }
             let key = String(keyValue[0])
             let value = String(keyValue[1])
-            guard let propertyKey = PropertyKey(rawValue: key) else { return nil }
-            return (propertyKey, EXTPropertyValue(value))
+            return (EXTAttributeKey(rawValue: key), EXTAttributeValue(value))
         }
         
-        return OrderedDictionary(uniqueKeysWithValues: keyValues)
+        return EXTAttributeList(uniqueKeysWithValues: keyValues)
     }
     
-    static func encodeKeyValues<PropertyKey>(properties: OrderedDictionary<PropertyKey, EXTPropertyValue>) -> String where PropertyKey: RawRepresentable, PropertyKey: Hashable, PropertyKey.RawValue == String {
+    static func encodeKeyValues(properties: EXTAttributeList) -> String {
         return properties
             .map { "\($0.key.rawValue)=\($0.value.value)"}
             .joined(separator: ",")

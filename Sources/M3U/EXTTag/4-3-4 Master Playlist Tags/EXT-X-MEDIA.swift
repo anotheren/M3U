@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import OrderedCollections
 
 /// EXT-X-MEDIA
 ///
@@ -22,93 +21,69 @@ import OrderedCollections
 /// > https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.4.1
 ///
 
-public struct EXT_X_MEDIA: Equatable, EXTPropertyTag {
+public struct EXT_X_MEDIA: Equatable, EXTAttributesTag {
     
-    var properties: OrderedDictionary<PropertyKey, EXTPropertyValue>
+    var attributeList: EXTAttributeList
     
-    init(properties: OrderedDictionary<PropertyKey, EXTPropertyValue>) {
-        self.properties = properties
+    init(properties: EXTAttributeList) {
+        self.attributeList = properties
     }
 }
  
 extension EXT_X_MEDIA {
      
     public var type: ContentType? {
-        get { properties[.type]?.load() }
-        set { properties[.type] = newValue.flatMap { .init(content: $0) } }
+        get { attributeList[.type]?.load() }
+        set { attributeList[.type] = newValue.flatMap { .init(content: $0) } }
     }
     
     public var groupID: String? {
-        get { properties[.groupID]?.load() }
-        set { properties[.groupID] = newValue.flatMap { .init(string: $0) } }
+        get { attributeList[.groupID]?.load() }
+        set { attributeList[.groupID] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var language: String? {
-        get { properties[.language]?.load() }
-        set { properties[.language] = newValue.flatMap { .init(string: $0) } }
+        get { attributeList[.language]?.load() }
+        set { attributeList[.language] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var name: String? {
-        get { properties[.name]?.load() }
-        set { properties[.name] = newValue.flatMap { .init(string: $0) } }
+        get { attributeList[.name]?.load() }
+        set { attributeList[.name] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var `default`: Bool? {
-        get { properties[.default]?.load() }
-        set { properties[.default] = newValue.flatMap { .init(bool: $0) } }
+        get { attributeList[.default]?.load() }
+        set { attributeList[.default] = newValue.flatMap { .init(bool: $0) } }
     }
     
     public var autoselect: Bool? {
-        get { properties[.autoselect]?.load() }
-        set { properties[.autoselect] = newValue.flatMap { .init(bool: $0) } }
+        get { attributeList[.autoselect]?.load() }
+        set { attributeList[.autoselect] = newValue.flatMap { .init(bool: $0) } }
     }
     
     public var instreamID: String? {
-        get { properties[.instreamID]?.load() }
-        set { properties[.instreamID] = newValue.flatMap { .init(string: $0) } }
+        get { attributeList[.instreamID]?.load() }
+        set { attributeList[.instreamID] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var channels: String? {
-        get { properties[.channels]?.load() }
-        set { properties[.channels] = newValue.flatMap { .init(string: $0) } }
+        get { attributeList[.channels]?.load() }
+        set { attributeList[.channels] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var uri: String? {
-        get { properties[.uri]?.load() }
-        set { properties[.uri] = newValue.flatMap { .init(string: $0) } }
+        get { attributeList[.uri]?.load() }
+        set { attributeList[.uri] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var forced: Bool? {
-        get { properties[.forced]?.load() }
-        set { properties[.forced] = newValue.flatMap { .init(bool: $0) } }
+        get { attributeList[.forced]?.load() }
+        set { attributeList[.forced] = newValue.flatMap { .init(bool: $0) } }
     }
 }
 
 extension EXT_X_MEDIA {
-    
-    struct PropertyKey: RawRepresentable, Hashable, CustomStringConvertible {
-        
-        let rawValue: String
-        
-        init(rawValue: String) {
-            self.rawValue = rawValue
-        }
-        
-        var description: String {
-            rawValue
-        }
-        
-        static let type       = PropertyKey(rawValue: "TYPE")
-        static let groupID    = PropertyKey(rawValue: "GROUP-ID")
-        static let language   = PropertyKey(rawValue: "LANGUAGE")
-        static let name       = PropertyKey(rawValue: "NAME")
-        static let `default`  = PropertyKey(rawValue: "DEFAULT")
-        static let autoselect = PropertyKey(rawValue: "AUTOSELECT")
-        static let instreamID = PropertyKey(rawValue: "INSTREAM-ID")
-        static let channels   = PropertyKey(rawValue: "CHANNELS")
-        static let uri        = PropertyKey(rawValue: "URI")
-        static let forced     = PropertyKey(rawValue: "FORCED")
-    }
     
     public struct ContentType: RawRepresentable, Equatable, CustomStringConvertible {
         
@@ -146,13 +121,13 @@ extension EXT_X_MEDIA: EXTTag {
     }
     
     public var lines: [String] {
-        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: properties)]
+        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributeList)]
     }
 }
 
 extension EXT_X_MEDIA: CustomStringConvertible {
     
     public var description: String {
-        "EXT-X-MEDIA(\(properties))"
+        "EXT-X-MEDIA(\(attributeList))"
     }
 }

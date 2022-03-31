@@ -1,5 +1,5 @@
 //
-//  EXTPropertyValue.swift
+//  EXTAttributeValue.swift
 //  M3U
 //
 //  Created by 刘栋 on 2022/3/26.
@@ -8,24 +8,24 @@
 
 import Foundation
 
-struct EXTPropertyValue: Equatable {
+public struct EXTAttributeValue: Equatable {
     
-    var value: String
+    public var value: String
     
-    init(_ value: String) {
+    public init(_ value: String) {
         self.value = value
     }
 }
 
-extension EXTPropertyValue: CustomStringConvertible {
+extension EXTAttributeValue: CustomStringConvertible {
     
-    var description: String {
+    public var description: String {
         value
     }
 }
 
 // MARK: String
-extension EXTPropertyValue {
+extension EXTAttributeValue {
     
     func load() -> String? {
         guard value.hasPrefix("\""), value.hasSuffix("\""), value.count >= 2 else {
@@ -42,7 +42,7 @@ extension EXTPropertyValue {
 }
 
 // MARK: Bool
-extension EXTPropertyValue {
+extension EXTAttributeValue {
     
     func load() -> Bool? {
         switch value {
@@ -61,7 +61,7 @@ extension EXTPropertyValue {
 }
 
 // MARK: Int
-extension EXTPropertyValue {
+extension EXTAttributeValue {
     
     func load() -> Int? {
         guard let int = Int(value) else {
@@ -76,7 +76,7 @@ extension EXTPropertyValue {
 }
 
 // MARK: Double
-extension EXTPropertyValue {
+extension EXTAttributeValue {
     
     func load() -> Double? {
         guard let double = Double(value) else {
@@ -98,7 +98,7 @@ extension EXTPropertyValue {
 }
 
 // MARK: Resolution
-extension EXTPropertyValue {
+extension EXTAttributeValue {
     
     func load() -> EXTResolution? {
         EXTResolution(string: value)
@@ -109,7 +109,7 @@ extension EXTPropertyValue {
     }
 }
 
-extension EXTPropertyValue {
+extension EXTAttributeValue {
     
     func load<Content: RawRepresentable>() -> Content? where Content.RawValue == String {
         guard let content = Content(rawValue: value) else {

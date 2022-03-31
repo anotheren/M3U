@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import OrderedCollections
 
 /// EXT-X-I-FRAME-STREAM-INF
 ///
@@ -18,62 +17,40 @@ import OrderedCollections
 ///
 /// > https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.4.3
 
-public struct EXT_X_I_FRAME_STREAM_INF: Equatable, EXTPropertyTag {
+public struct EXT_X_I_FRAME_STREAM_INF: Equatable, EXTAttributesTag {
     
-    var properties: OrderedDictionary<PropertyKey, EXTPropertyValue>
+    var attributeList: EXTAttributeList
     
-    init(properties: OrderedDictionary<PropertyKey, EXTPropertyValue>) {
-        self.properties = properties
+    init(properties: EXTAttributeList) {
+        self.attributeList = properties
     }
 }
 
 extension EXT_X_I_FRAME_STREAM_INF {
     
     public var averageBandwidth: Int? {
-        get { properties[.averageBandwidth]?.load() }
-        set { properties[.averageBandwidth] = newValue.flatMap { .init(int: $0) } }
+        get { attributeList[.averageBandwidth]?.load() }
+        set { attributeList[.averageBandwidth] = newValue.flatMap { .init(int: $0) } }
     }
     
     public var bandwidth: Int? {
-        get { properties[.bandwidth]?.load() }
-        set { properties[.bandwidth] = newValue.flatMap { .init(int: $0) } }
+        get { attributeList[.bandwidth]?.load() }
+        set { attributeList[.bandwidth] = newValue.flatMap { .init(int: $0) } }
     }
     
     public var codecs: String? {
-        get { properties[.codecs]?.load() }
-        set { properties[.codecs] = newValue.flatMap { .init(string: $0) } }
+        get { attributeList[.codecs]?.load() }
+        set { attributeList[.codecs] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var resolution: EXTResolution? {
-        get { properties[.resolution]?.load() }
-        set { properties[.resolution] = newValue.flatMap { .init(resolution: $0) } }
+        get { attributeList[.resolution]?.load() }
+        set { attributeList[.resolution] = newValue.flatMap { .init(resolution: $0) } }
     }
     
     public var uri: String? {
-        get { properties[.uri]?.load() }
-        set { properties[.uri] = newValue.flatMap { .init(string: $0) } }
-    }
-}
-
-extension EXT_X_I_FRAME_STREAM_INF {
-    
-    struct PropertyKey: RawRepresentable, Hashable, CustomStringConvertible {
-        
-        let rawValue: String
-        
-        init(rawValue: String) {
-            self.rawValue = rawValue
-        }
-        
-        var description: String {
-            rawValue
-        }
-        
-        static let averageBandwidth = PropertyKey(rawValue: "AVERAGE-BANDWIDTH")
-        static let bandwidth        = PropertyKey(rawValue: "BANDWIDTH")
-        static let codecs           = PropertyKey(rawValue: "CODECS")
-        static let resolution       = PropertyKey(rawValue: "RESOLUTION")
-        static let uri              = PropertyKey(rawValue: "URI")
+        get { attributeList[.uri]?.load() }
+        set { attributeList[.uri] = newValue.flatMap { .init(string: $0) } }
     }
 }
 
@@ -95,13 +72,13 @@ extension EXT_X_I_FRAME_STREAM_INF: EXTTag {
     }
     
     public var lines: [String] {
-        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: properties)]
+        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributeList)]
     }
 }
 
 extension EXT_X_I_FRAME_STREAM_INF: CustomStringConvertible {
     
     public var description: String {
-        "EXT-X-I-FRAME-STREAM-INF(\(properties))"
+        "EXT-X-I-FRAME-STREAM-INF(\(attributeList))"
     }
 }
