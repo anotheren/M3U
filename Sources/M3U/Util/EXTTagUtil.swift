@@ -34,6 +34,10 @@ struct EXTTagUtil {
         /// 4.3.2.2 EXT-X-BYTERANGE
         case EXT_X_BYTERANGE.hint:
             return EXT_X_BYTERANGE(lines: lines)
+            
+        /// 4.3.2.5 EXT-X-MAP
+        case EXT_X_MAP.hint:
+            return EXT_X_MAP(lines: lines)
         
         /// 4.3.3.1 EXT-X-TARGETDURATION
         case EXT_X_TARGETDURATION.hint:

@@ -66,7 +66,7 @@ extension EXT_X_PLAYLIST_TYPE: EXTTag {
 extension EXT_X_PLAYLIST_TYPE: CustomStringConvertible {
     
     public var description: String {
-        "EXT-X-PLAYLIST-TYPE(type:\(type))"
+        "EXT-X-PLAYLIST-TYPE(TYPE:\(type))"
     }
 }
  

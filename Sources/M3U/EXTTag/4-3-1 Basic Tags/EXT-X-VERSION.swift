@@ -53,6 +53,6 @@ extension EXT_X_VERSION: EXTTag {
 extension EXT_X_VERSION: CustomStringConvertible {
     
     public var description: String {
-        "EXT-X-VERSION(version:\(version))"
+        "EXT-X-VERSION(VERSION:\(version))"
     }
 }

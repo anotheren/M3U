@@ -31,12 +31,12 @@ public struct EXTINF: Equatable {
 
 extension EXTINF {
     
-    public var byteRange: EXTByteRange? {
-        associatedTag?.byteRange?.range
+    public var byterange: EXTByterange? {
+        associatedTag?.byterange?.range
     }
     
-    public var bitRate: Int? {
-        associatedTag?.bitRate?.rate
+    public var bitrate: Int? {
+        associatedTag?.bitrate?.rate
     }
 }
 
@@ -44,15 +44,15 @@ extension EXTINF {
     
     public enum AssociatedTag: RawRepresentable, Equatable {
         
-        case byteRange(EXT_X_BYTERANGE)
-        case bitRate(EXT_X_BITRATE)
+        case byterange(EXT_X_BYTERANGE)
+        case bitrate(EXT_X_BITRATE)
         
         public init?(rawValue: EXTTag) {
             switch rawValue {
             case let rawValue as EXT_X_BYTERANGE:
-                self = .byteRange(rawValue)
+                self = .byterange(rawValue)
             case let rawValue as EXT_X_BITRATE:
-                self = .bitRate(rawValue)
+                self = .bitrate(rawValue)
             default:
                 return nil
             }
@@ -60,21 +60,21 @@ extension EXTINF {
         
         public var rawValue: EXTTag {
             switch self {
-            case .byteRange(let tag): return tag
-            case .bitRate(let tag): return tag
+            case .byterange(let tag): return tag
+            case .bitrate(let tag): return tag
             }
         }
         
-        public var byteRange: EXT_X_BYTERANGE? {
+        public var byterange: EXT_X_BYTERANGE? {
             switch self {
-            case .byteRange(let tag): return tag
+            case .byterange(let tag): return tag
             default: return nil
             }
         }
         
-        public var bitRate: EXT_X_BITRATE? {
+        public var bitrate: EXT_X_BITRATE? {
             switch self {
-            case .bitRate(let tag): return tag
+            case .bitrate(let tag): return tag
             default: return nil
             }
         }
@@ -125,14 +125,14 @@ extension EXTINF: EXTTag {
 extension EXTINF: CustomStringConvertible {
     
     public var description: String {
-        var description = "EXTINF(duration:\(value)"
-        if let byteRange = associatedTag?.byteRange {
-            description.append(contentsOf: ",byteRange:\(byteRange.range)")
+        var description = "EXTINF(DURATION: \(value)"
+        if let byterange = associatedTag?.byterange {
+            description.append(contentsOf: ", BYTERANGE: \(byterange.range)")
         }
-        if let bitRate = associatedTag?.bitRate {
-            description.append(contentsOf: ",bitRate:\(bitRate.rate)")
+        if let bitrate = associatedTag?.bitrate {
+            description.append(contentsOf: ", BITRATE: \(bitrate.rate)")
         }
-        description.append(contentsOf: ",uri:\(uri))")
+        description.append(contentsOf: ", URI: \(uri))")
         return description
     }
 }

@@ -55,6 +55,6 @@ extension EXT_X_TARGETDURATION: EXTTag {
 extension EXT_X_TARGETDURATION: CustomStringConvertible {
     
     public var description: String {
-        "EXT-X-TARGETDURATION(seconds:\(seconds))"
+        "EXT-X-TARGETDURATION(SECONDS:\(seconds))"
     }
 }

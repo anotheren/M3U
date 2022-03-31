@@ -52,6 +52,6 @@ extension EXT_X_MEDIA_SEQUENCE: EXTTag {
 extension EXT_X_MEDIA_SEQUENCE: CustomStringConvertible {
     
     public var description: String {
-        "EXT-X-MEDIA-SEQUENCE(sequence:\(sequence))"
+        "EXT-X-MEDIA-SEQUENCE(SEQUENCE:\(sequence))"
     }
 }

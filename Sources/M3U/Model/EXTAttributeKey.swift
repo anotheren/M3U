@@ -44,4 +44,5 @@ extension EXTAttributeKey {
     public static let closedCaptions    = EXTAttributeKey(rawValue: "CLOSED-CAPTIONS")
     public static let audio             = EXTAttributeKey(rawValue: "AUDIO")
     public static let subtitles         = EXTAttributeKey(rawValue: "SUBTITLES")
+    public static let byterange         = EXTAttributeKey(rawValue: "BYTERANGE")
 }

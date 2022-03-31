@@ -18,9 +18,9 @@ import Foundation
 ///
 public struct EXT_X_BYTERANGE: Equatable {
     
-    public var range: EXTByteRange
+    public var range: EXTByterange
     
-    public init(range: EXTByteRange) {
+    public init(range: EXTByterange) {
         self.range = range
     }
 }
@@ -39,7 +39,7 @@ extension EXT_X_BYTERANGE: EXTTag {
         let startIndex = line.index(line.startIndex, offsetBy: Self.hint.count+1)
         let endIndex = line.endIndex
         let plainText = String(line[startIndex..<endIndex])
-        guard let range = EXTByteRange(string: plainText) else {
+        guard let range = EXTByterange(string: plainText) else {
             return nil
         }
         self.init(range: range)

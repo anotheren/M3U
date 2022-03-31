@@ -10,5 +10,5 @@ import Foundation
 
 protocol EXTAttributesTag: EXTTag {
     
-    var attributeList: EXTAttributeList { get set }
+    var attributes: EXTAttributeList { get set }
 }

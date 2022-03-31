@@ -23,63 +23,63 @@ import Foundation
 
 public struct EXT_X_MEDIA: Equatable, EXTAttributesTag {
     
-    var attributeList: EXTAttributeList
+    var attributes: EXTAttributeList
     
-    init(properties: EXTAttributeList) {
-        self.attributeList = properties
+    init(attributes: EXTAttributeList) {
+        self.attributes = attributes
     }
 }
  
 extension EXT_X_MEDIA {
      
     public var type: ContentType? {
-        get { attributeList[.type]?.load() }
-        set { attributeList[.type] = newValue.flatMap { .init(content: $0) } }
+        get { attributes[.type]?.load() }
+        set { attributes[.type] = newValue.flatMap { .init(content: $0) } }
     }
     
     public var groupID: String? {
-        get { attributeList[.groupID]?.load() }
-        set { attributeList[.groupID] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.groupID]?.load() }
+        set { attributes[.groupID] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var language: String? {
-        get { attributeList[.language]?.load() }
-        set { attributeList[.language] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.language]?.load() }
+        set { attributes[.language] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var name: String? {
-        get { attributeList[.name]?.load() }
-        set { attributeList[.name] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.name]?.load() }
+        set { attributes[.name] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var `default`: Bool? {
-        get { attributeList[.default]?.load() }
-        set { attributeList[.default] = newValue.flatMap { .init(bool: $0) } }
+        get { attributes[.default]?.load() }
+        set { attributes[.default] = newValue.flatMap { .init(bool: $0) } }
     }
     
     public var autoselect: Bool? {
-        get { attributeList[.autoselect]?.load() }
-        set { attributeList[.autoselect] = newValue.flatMap { .init(bool: $0) } }
+        get { attributes[.autoselect]?.load() }
+        set { attributes[.autoselect] = newValue.flatMap { .init(bool: $0) } }
     }
     
     public var instreamID: String? {
-        get { attributeList[.instreamID]?.load() }
-        set { attributeList[.instreamID] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.instreamID]?.load() }
+        set { attributes[.instreamID] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var channels: String? {
-        get { attributeList[.channels]?.load() }
-        set { attributeList[.channels] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.channels]?.load() }
+        set { attributes[.channels] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var uri: String? {
-        get { attributeList[.uri]?.load() }
-        set { attributeList[.uri] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.uri]?.load() }
+        set { attributes[.uri] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var forced: Bool? {
-        get { attributeList[.forced]?.load() }
-        set { attributeList[.forced] = newValue.flatMap { .init(bool: $0) } }
+        get { attributes[.forced]?.load() }
+        set { attributes[.forced] = newValue.flatMap { .init(bool: $0) } }
     }
 }
 
@@ -117,17 +117,17 @@ extension EXT_X_MEDIA: EXTTag {
         let startIndex = line.index(line.startIndex, offsetBy: Self.hint.count+1)
         let endIndex = line.endIndex
         let plainText = String(line[startIndex..<endIndex])
-        self.init(properties: EXTTagUtil.decodeKeyValues(plainText: plainText))
+        self.init(attributes: EXTTagUtil.decodeKeyValues(plainText: plainText))
     }
     
     public var lines: [String] {
-        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributeList)]
+        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributes)]
     }
 }
 
 extension EXT_X_MEDIA: CustomStringConvertible {
     
     public var description: String {
-        "EXT-X-MEDIA(\(attributeList))"
+        "EXT-X-MEDIA(\(attributes))"
     }
 }

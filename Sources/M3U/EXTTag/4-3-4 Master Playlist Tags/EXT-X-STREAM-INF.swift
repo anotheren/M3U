@@ -23,11 +23,11 @@ import Foundation
 
 public struct EXT_X_STREAM_INF: Equatable, EXTAttributesTag {
     
-    var attributeList: EXTAttributeList
+    var attributes: EXTAttributeList
     var uri: String
     
-    init(properties: EXTAttributeList, uri: String) {
-        self.attributeList = properties
+    init(attributes: EXTAttributeList, uri: String) {
+        self.attributes = attributes
         self.uri = uri
     }
 }
@@ -35,43 +35,43 @@ public struct EXT_X_STREAM_INF: Equatable, EXTAttributesTag {
 extension EXT_X_STREAM_INF {
     
     public var averageBandwidth: Int? {
-        get { attributeList[.averageBandwidth]?.load() }
-        set { attributeList[.averageBandwidth] = newValue.flatMap { .init(int: $0) } }
+        get { attributes[.averageBandwidth]?.load() }
+        set { attributes[.averageBandwidth] = newValue.flatMap { .init(int: $0) } }
     }
     
     public var bandwidth: Int? {
-        get { attributeList[.bandwidth]?.load() }
-        set { attributeList[.bandwidth] = newValue.flatMap { .init(int: $0) } }
+        get { attributes[.bandwidth]?.load() }
+        set { attributes[.bandwidth] = newValue.flatMap { .init(int: $0) } }
     }
     
     public var codecs: String? {
-        get { attributeList[.codecs]?.load() }
-        set { attributeList[.codecs] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.codecs]?.load() }
+        set { attributes[.codecs] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var resolution: EXTResolution? {
-        get { attributeList[.resolution]?.load() }
-        set { attributeList[.resolution] = newValue.flatMap { .init(resolution: $0) } }
+        get { attributes[.resolution]?.load() }
+        set { attributes[.resolution] = newValue.flatMap { .init(resolution: $0) } }
     }
     
     public var frameRate: Double? {
-        get { attributeList[.frameRate]?.load() }
-        set { attributeList[.frameRate] = newValue.flatMap { .init(double: $0, fractionDigits: 3) } }
+        get { attributes[.frameRate]?.load() }
+        set { attributes[.frameRate] = newValue.flatMap { .init(double: $0, fractionDigits: 3) } }
     }
     
     public var closedCaptions: String? {
-        get { attributeList[.closedCaptions]?.load() }
-        set { attributeList[.closedCaptions] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.closedCaptions]?.load() }
+        set { attributes[.closedCaptions] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var audio: String? {
-        get { attributeList[.audio]?.load() }
-        set { attributeList[.audio] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.audio]?.load() }
+        set { attributes[.audio] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var subtitles: String? {
-        get { attributeList[.subtitles]?.load() }
-        set { attributeList[.subtitles] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.subtitles]?.load() }
+        set { attributes[.subtitles] = newValue.flatMap { .init(string: $0) } }
     }
 }
 
@@ -93,17 +93,17 @@ extension EXT_X_STREAM_INF: EXTTag {
         let endIndex = line.endIndex
         let plainText = String(line[startIndex..<endIndex])
         let uri = lines[1]
-        self.init(properties: EXTTagUtil.decodeKeyValues(plainText: plainText), uri: uri)
+        self.init(attributes: EXTTagUtil.decodeKeyValues(plainText: plainText), uri: uri)
     }
     
     public var lines: [String] {
-        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributeList), uri]
+        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributes), uri]
     }
 }
 
 extension EXT_X_STREAM_INF: CustomStringConvertible {
     
     public var description: String {
-        "EXT-X-STREAM-INF(\(attributeList), \(uri))"
+        "EXT-X-STREAM-INF(\(attributes), \(uri))"
     }
 }

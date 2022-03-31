@@ -1,5 +1,5 @@
 //
-//  EXTByteRange.swift
+//  EXTByterange.swift
 //  M3U
 //
 //  Created by 刘栋 on 2022/3/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct EXTByteRange: Equatable {
+public struct EXTByterange: Equatable {
     
     public let length: Int
     public let offset: Int
@@ -19,7 +19,7 @@ public struct EXTByteRange: Equatable {
     }
 }
 
-extension EXTByteRange {
+extension EXTByterange {
     
     init?(string: String) {
         let items = string.split(separator: "@")
@@ -30,7 +30,7 @@ extension EXTByteRange {
     }
 }
 
-extension EXTByteRange: CustomStringConvertible {
+extension EXTByterange: CustomStringConvertible {
     
     public var description: String {
         "\(length)@\(offset)"

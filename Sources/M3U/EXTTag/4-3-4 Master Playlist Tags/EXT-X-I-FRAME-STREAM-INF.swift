@@ -19,38 +19,38 @@ import Foundation
 
 public struct EXT_X_I_FRAME_STREAM_INF: Equatable, EXTAttributesTag {
     
-    var attributeList: EXTAttributeList
+    var attributes: EXTAttributeList
     
-    init(properties: EXTAttributeList) {
-        self.attributeList = properties
+    init(attributes: EXTAttributeList) {
+        self.attributes = attributes
     }
 }
 
 extension EXT_X_I_FRAME_STREAM_INF {
     
     public var averageBandwidth: Int? {
-        get { attributeList[.averageBandwidth]?.load() }
-        set { attributeList[.averageBandwidth] = newValue.flatMap { .init(int: $0) } }
+        get { attributes[.averageBandwidth]?.load() }
+        set { attributes[.averageBandwidth] = newValue.flatMap { .init(int: $0) } }
     }
     
     public var bandwidth: Int? {
-        get { attributeList[.bandwidth]?.load() }
-        set { attributeList[.bandwidth] = newValue.flatMap { .init(int: $0) } }
+        get { attributes[.bandwidth]?.load() }
+        set { attributes[.bandwidth] = newValue.flatMap { .init(int: $0) } }
     }
     
     public var codecs: String? {
-        get { attributeList[.codecs]?.load() }
-        set { attributeList[.codecs] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.codecs]?.load() }
+        set { attributes[.codecs] = newValue.flatMap { .init(string: $0) } }
     }
     
     public var resolution: EXTResolution? {
-        get { attributeList[.resolution]?.load() }
-        set { attributeList[.resolution] = newValue.flatMap { .init(resolution: $0) } }
+        get { attributes[.resolution]?.load() }
+        set { attributes[.resolution] = newValue.flatMap { .init(resolution: $0) } }
     }
     
     public var uri: String? {
-        get { attributeList[.uri]?.load() }
-        set { attributeList[.uri] = newValue.flatMap { .init(string: $0) } }
+        get { attributes[.uri]?.load() }
+        set { attributes[.uri] = newValue.flatMap { .init(string: $0) } }
     }
 }
 
@@ -68,17 +68,17 @@ extension EXT_X_I_FRAME_STREAM_INF: EXTTag {
         let startIndex = line.index(line.startIndex, offsetBy: Self.hint.count+1)
         let endIndex = line.endIndex
         let plainText = String(line[startIndex..<endIndex])
-        self.init(properties: EXTTagUtil.decodeKeyValues(plainText: plainText))
+        self.init(attributes: EXTTagUtil.decodeKeyValues(plainText: plainText))
     }
     
     public var lines: [String] {
-        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributeList)]
+        [Self.hint + ":" + EXTTagUtil.encodeKeyValues(properties: attributes)]
     }
 }
 
 extension EXT_X_I_FRAME_STREAM_INF: CustomStringConvertible {
     
     public var description: String {
-        "EXT-X-I-FRAME-STREAM-INF(\(attributeList))"
+        "EXT-X-I-FRAME-STREAM-INF(\(attributes))"
     }
 }
