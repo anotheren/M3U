@@ -37,6 +37,11 @@ final class M3UTests: XCTestCase {
             let url = masterURL.deletingLastPathComponent().appendingPathComponent(uri)
             try await loadM3U(url: url)
         }
+        
+        if let i_frame_stream_inf = masterPlayList.tags.compactMap({ $0 as? EXT_X_I_FRAME_STREAM_INF }).randomElement(), let uri = i_frame_stream_inf.uri {
+            let url = masterURL.deletingLastPathComponent().appendingPathComponent(uri)
+            try await loadM3U(url: url)
+        }
     }
     
     func testAppleHLS_advancedStream_fMP4() async throws {
@@ -45,6 +50,36 @@ final class M3UTests: XCTestCase {
         
         if let stream_inf = masterPlayList.tags.compactMap({ $0 as? EXT_X_STREAM_INF }).randomElement() {
             let url = masterURL.deletingLastPathComponent().appendingPathComponent(stream_inf.uri)
+            try await loadM3U(url: url)
+        }
+        
+        if let audio = masterPlayList.tags.compactMap({ $0 as? EXT_X_MEDIA }).filter({ $0.type == .audio }).randomElement(), let uri = audio.uri {
+            let url = masterURL.deletingLastPathComponent().appendingPathComponent(uri)
+            try await loadM3U(url: url)
+        }
+        
+        if let i_frame_stream_inf = masterPlayList.tags.compactMap({ $0 as? EXT_X_I_FRAME_STREAM_INF }).randomElement(), let uri = i_frame_stream_inf.uri {
+            let url = masterURL.deletingLastPathComponent().appendingPathComponent(uri)
+            try await loadM3U(url: url)
+        }
+    }
+    
+    func testAppleHLS_advancedStream_HEVC() async throws {
+        let masterURL = AppleHLSTestURL.advancedStream_HEVC.url
+        let masterPlayList = try await loadM3U(url: masterURL)
+        
+        if let stream_inf = masterPlayList.tags.compactMap({ $0 as? EXT_X_STREAM_INF }).randomElement() {
+            let url = masterURL.deletingLastPathComponent().appendingPathComponent(stream_inf.uri)
+            try await loadM3U(url: url)
+        }
+        
+        if let audio = masterPlayList.tags.compactMap({ $0 as? EXT_X_MEDIA }).filter({ $0.type == .audio }).randomElement(), let uri = audio.uri {
+            let url = masterURL.deletingLastPathComponent().appendingPathComponent(uri)
+            try await loadM3U(url: url)
+        }
+        
+        if let i_frame_stream_inf = masterPlayList.tags.compactMap({ $0 as? EXT_X_I_FRAME_STREAM_INF }).randomElement(), let uri = i_frame_stream_inf.uri {
+            let url = masterURL.deletingLastPathComponent().appendingPathComponent(uri)
             try await loadM3U(url: url)
         }
     }
