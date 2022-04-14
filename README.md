@@ -2,6 +2,14 @@
 
 M3U Parser, for edit or create m3u list, write in Swift.
 
+## Installation
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/anotheren/M3U.git", .upToNextMajor(from: "0.1.0"))
+]
+```
+
 ## Supportted Tags
 
 | Tag | struct | remark |
